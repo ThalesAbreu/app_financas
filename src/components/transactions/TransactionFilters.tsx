@@ -21,72 +21,92 @@ interface TransactionFiltersProps {
 
 const MONTHS = Array.from({ length: 12 }, (_, i) => ({
   value: i + 1,
-  label: format(new Date(2000, i, 1), "MMMM", { locale: ptBR }),
+  label: format(new Date(2000, i, 1), "MMM", { locale: ptBR }),
+  labelFull: format(new Date(2000, i, 1), "MMMM", { locale: ptBR }),
 }));
 
 const YEARS = Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - i);
 
 export function TransactionFiltersBar({ filters, onChange }: TransactionFiltersProps) {
   return (
-    <div className="flex flex-col sm:flex-row gap-3">
-      <div className="relative flex-1">
+    <div className="flex flex-col gap-2">
+      {/* Search */}
+      <div className="relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
         <Input
           placeholder="Buscar por descrição..."
           value={filters.search}
           onChange={(e) => onChange({ ...filters, search: e.target.value })}
-          className="pl-9"
+          className="pl-9 h-10"
         />
       </div>
 
-      <Select
-        value={filters.month.toString()}
-        onValueChange={(v) => v && onChange({ ...filters, month: parseInt(v) })}
-      >
-        <SelectTrigger className="sm:w-36">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          {MONTHS.map((m) => (
-            <SelectItem key={m.value} value={m.value.toString()}>
-              {m.label.charAt(0).toUpperCase() + m.label.slice(1)}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      {/* Selects: compact row on all sizes */}
+      <div className="grid grid-cols-3 gap-2 sm:flex sm:gap-2">
+        <Select
+          value={filters.month.toString()}
+          onValueChange={(v) => v && onChange({ ...filters, month: parseInt(v) })}
+        >
+          <SelectTrigger className="h-9 text-sm sm:w-36">
+            <SelectValue>
+              <span className="sm:hidden capitalize">
+                {MONTHS[filters.month - 1]?.label}
+              </span>
+              <span className="hidden sm:inline capitalize">
+                {MONTHS[filters.month - 1]?.labelFull.charAt(0).toUpperCase() +
+                  MONTHS[filters.month - 1]?.labelFull.slice(1)}
+              </span>
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {MONTHS.map((m) => (
+              <SelectItem key={m.value} value={m.value.toString()}>
+                {m.labelFull.charAt(0).toUpperCase() + m.labelFull.slice(1)}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
-      <Select
-        value={filters.year.toString()}
-        onValueChange={(v) => v && onChange({ ...filters, year: parseInt(v) })}
-      >
-        <SelectTrigger className="sm:w-28">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          {YEARS.map((y) => (
-            <SelectItem key={y} value={y.toString()}>
-              {y}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+        <Select
+          value={filters.year.toString()}
+          onValueChange={(v) => v && onChange({ ...filters, year: parseInt(v) })}
+        >
+          <SelectTrigger className="h-9 text-sm sm:w-28">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {YEARS.map((y) => (
+              <SelectItem key={y} value={y.toString()}>
+                {y}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
-      <Select
-        value={filters.category}
-        onValueChange={(v) => v && onChange({ ...filters, category: v as Category | "todas" })}
-      >
-        <SelectTrigger className="sm:w-40">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="todas">Todas categorias</SelectItem>
-          {ALL_CATEGORIES.map((cat) => (
-            <SelectItem key={cat} value={cat}>
-              {cat}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+        <Select
+          value={filters.category}
+          onValueChange={(v) => v && onChange({ ...filters, category: v as Category | "todas" })}
+        >
+          <SelectTrigger className="h-9 text-sm sm:w-40">
+            <SelectValue>
+              <span className="sm:hidden">
+                {filters.category === "todas" ? "Todas" : filters.category}
+              </span>
+              <span className="hidden sm:inline">
+                {filters.category === "todas" ? "Todas categorias" : filters.category}
+              </span>
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="todas">Todas categorias</SelectItem>
+            {ALL_CATEGORIES.map((cat) => (
+              <SelectItem key={cat} value={cat}>
+                {cat}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
     </div>
   );
 }
