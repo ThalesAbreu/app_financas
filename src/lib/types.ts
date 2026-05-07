@@ -7,8 +7,11 @@ export type Category =
   | "Lazer"
   | "Saúde"
   | "Educação"
+  | "Investimentos"
   | "Salário"
   | "Freelance"
+  | "Dividendos"
+  | "Saldo Anterior"
   | "Outros";
 
 export interface Transaction {

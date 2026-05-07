@@ -9,6 +9,7 @@ import { ArrowRight } from "lucide-react";
 
 interface RecentTransactionsProps {
   transactions: Transaction[];
+  hidden?: boolean;
 }
 
 function formatCurrency(value: number) {
@@ -18,7 +19,7 @@ function formatCurrency(value: number) {
   }).format(value);
 }
 
-export function RecentTransactions({ transactions }: RecentTransactionsProps) {
+export function RecentTransactions({ transactions, hidden = false }: RecentTransactionsProps) {
   const recent = [...transactions]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 5);
@@ -43,24 +44,27 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
               <div key={t.id} className="flex items-center justify-between py-2 border-b border-gray-50 dark:border-gray-800 last:border-0">
                 <div className="flex items-center gap-3">
                   <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{t.description}</p>
+                    <p className={`text-sm font-medium text-gray-900 dark:text-gray-100 transition-all duration-200 ${hidden ? "blur-sm select-none" : ""}`}>
+                      {t.description}
+                    </p>
                     <div className="flex items-center gap-2 mt-0.5">
                       <span className="text-xs text-gray-400 dark:text-gray-500">
                         {format(new Date(t.date), "dd/MM/yyyy", { locale: ptBR })}
                       </span>
-                      <Badge variant="outline" className="text-xs py-0 px-1.5">
+                      <Badge variant="outline" className={`text-xs py-0 px-1.5 transition-all duration-200 ${hidden ? "blur-sm select-none" : ""}`}>
                         {t.category}
                       </Badge>
                     </div>
                   </div>
                 </div>
                 <span
-                  className={`text-sm font-semibold ${
+                  className={`text-sm font-semibold tabular-nums transition-all duration-200 ${
                     t.type === "receita" ? "text-green-600" : "text-red-600"
-                  }`}
+                  } ${hidden ? "blur-sm select-none" : ""}`}
                 >
-                  {t.type === "receita" ? "+" : "-"}
-                  {formatCurrency(t.amount)}
+                  {hidden
+                    ? "R$ ••••••"
+                    : `${t.type === "receita" ? "+" : "-"}${formatCurrency(t.amount)}`}
                 </span>
               </div>
             ))}

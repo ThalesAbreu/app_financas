@@ -9,7 +9,7 @@ import { TransactionForm } from "@/components/transactions/TransactionForm";
 import { TransactionFiltersBar } from "@/components/transactions/TransactionFilters";
 import { Button } from "@/components/ui/button";
 import { Transaction, TransactionFilters } from "@/lib/types";
-import { Plus, RefreshCw } from "lucide-react";
+import { Plus, RefreshCw, Eye, EyeOff } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -20,6 +20,7 @@ export default function DashboardPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [hideValues, setHideValues] = useState(false);
   const [filters, setFilters] = useState<TransactionFilters>({
     month: now.getMonth() + 1,
     year: now.getFullYear(),
@@ -70,6 +71,14 @@ export default function DashboardPage() {
           <Button
             variant="outline"
             size="icon"
+            onClick={() => setHideValues((v) => !v)}
+            title={hideValues ? "Exibir valores" : "Ocultar valores"}
+          >
+            {hideValues ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
             onClick={fetchTransactions}
             disabled={loading}
           >
@@ -92,11 +101,11 @@ export default function DashboardPage() {
         </div>
       ) : (
         <>
-          <SummaryCards transactions={transactions} />
+          <SummaryCards transactions={transactions} hidden={hideValues} />
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <ExpenseChart transactions={transactions} />
-            <RecentTransactions transactions={transactions} />
+            <ExpenseChart transactions={transactions} hidden={hideValues} />
+            <RecentTransactions transactions={transactions} hidden={hideValues} />
           </div>
         </>
       )}

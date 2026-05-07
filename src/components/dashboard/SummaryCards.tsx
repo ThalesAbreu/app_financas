@@ -4,6 +4,7 @@ import { Transaction } from "@/lib/types";
 
 interface SummaryCardsProps {
   transactions: Transaction[];
+  hidden?: boolean;
 }
 
 function formatCurrency(value: number) {
@@ -13,7 +14,9 @@ function formatCurrency(value: number) {
   }).format(value);
 }
 
-export function SummaryCards({ transactions }: SummaryCardsProps) {
+const MASK = "R$ ••••••";
+
+export function SummaryCards({ transactions, hidden = false }: SummaryCardsProps) {
   const totalReceitas = transactions
     .filter((t) => t.type === "receita")
     .reduce((sum, t) => sum + t.amount, 0);
@@ -34,7 +37,9 @@ export function SummaryCards({ transactions }: SummaryCardsProps) {
           </div>
         </CardHeader>
         <CardContent>
-          <p className="text-2xl font-bold text-green-600">{formatCurrency(totalReceitas)}</p>
+          <p className="text-2xl font-bold text-green-600 tracking-wider">
+            {hidden ? MASK : formatCurrency(totalReceitas)}
+          </p>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Total do período</p>
         </CardContent>
       </Card>
@@ -47,7 +52,9 @@ export function SummaryCards({ transactions }: SummaryCardsProps) {
           </div>
         </CardHeader>
         <CardContent>
-          <p className="text-2xl font-bold text-red-600">{formatCurrency(totalDespesas)}</p>
+          <p className="text-2xl font-bold text-red-600 tracking-wider">
+            {hidden ? MASK : formatCurrency(totalDespesas)}
+          </p>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Total do período</p>
         </CardContent>
       </Card>
@@ -60,8 +67,8 @@ export function SummaryCards({ transactions }: SummaryCardsProps) {
           </div>
         </CardHeader>
         <CardContent>
-          <p className={`text-2xl font-bold ${saldo >= 0 ? "text-blue-600" : "text-orange-600"}`}>
-            {formatCurrency(saldo)}
+          <p className={`text-2xl font-bold tracking-wider ${saldo >= 0 ? "text-blue-600" : "text-orange-600"}`}>
+            {hidden ? MASK : formatCurrency(saldo)}
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Receitas - Despesas</p>
         </CardContent>

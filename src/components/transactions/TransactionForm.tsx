@@ -71,20 +71,22 @@ export function TransactionForm({
 
     setLoading(true);
 
-    const payload = {
-      description,
-      amount: parsedAmount,
-      date,
-      type,
-      category,
-    };
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+      toast.error("Sessão expirada. Faça login novamente.");
+      setLoading(false);
+      return;
+    }
+
+    const updatePayload = { description, amount: parsedAmount, date, type, category };
 
     const { error } = isEditing
       ? await supabase
           .from("transactions")
-          .update(payload)
+          .update(updatePayload)
           .eq("id", editingTransaction!.id)
-      : await supabase.from("transactions").insert(payload);
+      : await supabase.from("transactions").insert({ ...updatePayload, user_id: user.id });
 
     if (error) {
       toast.error("Erro ao salvar transação", { description: error.message });

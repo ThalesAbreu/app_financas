@@ -7,12 +7,15 @@ export const EXPENSE_CATEGORIES: Category[] = [
   "Lazer",
   "Saúde",
   "Educação",
+  "Investimentos",
   "Outros",
 ];
 
 export const INCOME_CATEGORIES: Category[] = [
   "Salário",
   "Freelance",
+  "Dividendos",
+  "Saldo Anterior",
   "Outros",
 ];
 
@@ -23,8 +26,11 @@ export const ALL_CATEGORIES: Category[] = [
   "Lazer",
   "Saúde",
   "Educação",
+  "Investimentos",
   "Salário",
   "Freelance",
+  "Dividendos",
+  "Saldo Anterior",
   "Outros",
 ];
 
@@ -39,7 +45,10 @@ export const CATEGORY_COLORS: Record<Category, string> = {
   Lazer: "#ec4899",
   Saúde: "#10b981",
   Educação: "#f59e0b",
+  Investimentos: "#0ea5e9",
   Salário: "#22c55e",
   Freelance: "#06b6d4",
+  Dividendos: "#a855f7",
+  "Saldo Anterior": "#64748b",
   Outros: "#94a3b8",
 };

@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS public.transactions (
   category    text NOT NULL CHECK (
     category IN (
       'Alimentação', 'Transporte', 'Moradia', 'Lazer',
-      'Saúde', 'Educação', 'Salário', 'Freelance', 'Outros'
+      'Saúde', 'Educação', 'Investimentos', 'Salário', 'Freelance',
+      'Dividendos', 'Saldo Anterior', 'Outros'
     )
   ),
   created_at  timestamptz DEFAULT now() NOT NULL
