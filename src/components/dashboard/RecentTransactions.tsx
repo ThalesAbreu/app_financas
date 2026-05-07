@@ -24,9 +24,9 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
     .slice(0, 5);
 
   return (
-    <Card className="border-0 shadow-sm bg-white">
+    <Card className="border-0 shadow-sm">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-base font-semibold text-gray-800">Transações Recentes</CardTitle>
+        <CardTitle className="text-base font-semibold text-gray-800 dark:text-gray-100">Transações Recentes</CardTitle>
         <Link href="/transactions">
           <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700">
             Ver todas
@@ -36,16 +36,16 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
       </CardHeader>
       <CardContent>
         {recent.length === 0 ? (
-          <p className="text-center text-gray-400 text-sm py-8">Nenhuma transação no período</p>
+          <p className="text-center text-gray-400 dark:text-gray-500 text-sm py-8">Nenhuma transação no período</p>
         ) : (
           <div className="space-y-3">
             {recent.map((t) => (
-              <div key={t.id} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+              <div key={t.id} className="flex items-center justify-between py-2 border-b border-gray-50 dark:border-gray-800 last:border-0">
                 <div className="flex items-center gap-3">
                   <div>
-                    <p className="text-sm font-medium text-gray-900">{t.description}</p>
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{t.description}</p>
                     <div className="flex items-center gap-2 mt-0.5">
-                      <span className="text-xs text-gray-400">
+                      <span className="text-xs text-gray-400 dark:text-gray-500">
                         {format(new Date(t.date), "dd/MM/yyyy", { locale: ptBR })}
                       </span>
                       <Badge variant="outline" className="text-xs py-0 px-1.5">

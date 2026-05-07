@@ -62,7 +62,7 @@ export function TransactionList({ transactions, onRefresh }: TransactionListProp
 
   if (transactions.length === 0) {
     return (
-      <div className="text-center py-16 text-gray-400">
+      <div className="text-center py-16 text-gray-400 dark:text-gray-500">
         <p className="text-lg">Nenhuma transação encontrada</p>
         <p className="text-sm mt-1">Ajuste os filtros ou adicione uma nova transação</p>
       </div>
@@ -74,22 +74,22 @@ export function TransactionList({ transactions, onRefresh }: TransactionListProp
       <div className="overflow-x-auto">
         <Table>
           <TableHeader>
-            <TableRow className="bg-gray-50">
-              <TableHead className="text-xs font-semibold text-gray-500 uppercase">Data</TableHead>
-              <TableHead className="text-xs font-semibold text-gray-500 uppercase">Descrição</TableHead>
-              <TableHead className="text-xs font-semibold text-gray-500 uppercase hidden sm:table-cell">Categoria</TableHead>
-              <TableHead className="text-xs font-semibold text-gray-500 uppercase">Tipo</TableHead>
-              <TableHead className="text-xs font-semibold text-gray-500 uppercase text-right">Valor</TableHead>
-              <TableHead className="text-xs font-semibold text-gray-500 uppercase text-right">Ações</TableHead>
+            <TableRow className="bg-gray-50 dark:bg-gray-800/50">
+              <TableHead className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Data</TableHead>
+              <TableHead className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Descrição</TableHead>
+              <TableHead className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase hidden sm:table-cell">Categoria</TableHead>
+              <TableHead className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Tipo</TableHead>
+              <TableHead className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase text-right">Valor</TableHead>
+              <TableHead className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase text-right">Ações</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {transactions.map((t) => (
-              <TableRow key={t.id} className="hover:bg-gray-50/50">
-                <TableCell className="text-sm text-gray-600 whitespace-nowrap">
+              <TableRow key={t.id} className="hover:bg-gray-50/50 dark:hover:bg-gray-800/50">
+                <TableCell className="text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap">
                   {format(new Date(t.date), "dd/MM/yyyy", { locale: ptBR })}
                 </TableCell>
-                <TableCell className="text-sm font-medium text-gray-900 max-w-[200px] truncate">
+                <TableCell className="text-sm font-medium text-gray-900 dark:text-gray-100 max-w-[200px] truncate">
                   {t.description}
                 </TableCell>
                 <TableCell className="hidden sm:table-cell">
@@ -109,8 +109,8 @@ export function TransactionList({ transactions, onRefresh }: TransactionListProp
                   <Badge
                     className={`text-xs ${
                       t.type === "receita"
-                        ? "bg-green-100 text-green-700 hover:bg-green-100"
-                        : "bg-red-100 text-red-700 hover:bg-red-100"
+                        ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 hover:bg-green-100"
+                        : "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 hover:bg-red-100"
                     }`}
                     variant="secondary"
                   >

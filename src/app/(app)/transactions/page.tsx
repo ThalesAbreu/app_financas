@@ -73,8 +73,8 @@ export default function TransactionsPage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Transações</h1>
-          <p className="text-sm text-gray-500 mt-0.5">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Transações</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
             {filteredTransactions.length} transação(ões) encontrada(s)
           </p>
         </div>
@@ -99,12 +99,12 @@ export default function TransactionsPage() {
 
       <TransactionFiltersBar filters={filters} onChange={setFilters} />
 
-      <Card className="border-0 shadow-sm bg-white">
+      <Card className="border-0 shadow-sm">
         <CardContent className="p-0">
           {loading ? (
             <div className="space-y-3 p-6">
               {[1, 2, 3, 4, 5].map((i) => (
-                <div key={i} className="h-12 rounded-lg bg-gray-100 animate-pulse" />
+                <div key={i} className="h-12 rounded-lg bg-gray-100 dark:bg-gray-800 animate-pulse" />
               ))}
             </div>
           ) : (

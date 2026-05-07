@@ -63,8 +63,8 @@ export default function DashboardPage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-sm text-gray-500 mt-0.5 capitalize">{monthLabel}</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5 capitalize">{monthLabel}</p>
         </div>
         <div className="flex items-center gap-2">
           <Button
@@ -87,7 +87,7 @@ export default function DashboardPage() {
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-28 rounded-xl bg-gray-100 animate-pulse" />
+            <div key={i} className="h-28 rounded-xl bg-gray-100 dark:bg-gray-800 animate-pulse" />
           ))}
         </div>
       ) : (
