@@ -35,13 +35,13 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-950 p-4">
       <div className="w-full max-w-md">
         <div className="flex items-center justify-center gap-2 mb-8">
           <div className="bg-blue-600 p-2 rounded-xl">
             <TrendingUp className="h-6 w-6 text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">FinançasPRO</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">FinançasPRO</h1>
         </div>
 
         <Card className="shadow-lg border-0">
@@ -81,7 +81,7 @@ export default function LoginPage() {
               </Button>
             </form>
 
-            <div className="mt-6 text-center text-sm text-gray-600">
+            <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
               Não tem uma conta?{" "}
               <Link href="/auth/signup" className="text-blue-600 hover:underline font-medium">
                 Criar conta
