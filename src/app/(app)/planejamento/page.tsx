@@ -43,22 +43,22 @@ export default function PlanejamentoPage() {
       </div>
 
       <Tabs defaultValue="budget" className="space-y-6">
-        <TabsList className="grid grid-cols-4 w-full h-auto gap-1 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl">
-          <TabsTrigger value="budget" className="flex items-center gap-1.5 text-xs sm:text-sm rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900 data-[state=active]:shadow-sm py-2">
+        <TabsList className="w-full h-auto p-1">
+          <TabsTrigger value="budget" className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs sm:text-sm h-auto">
             <BarChart3 className="h-3.5 w-3.5 shrink-0" />
             <span className="hidden sm:inline">Orçamento</span>
             <span className="sm:hidden">Orç.</span>
           </TabsTrigger>
-          <TabsTrigger value="goals" className="flex items-center gap-1.5 text-xs sm:text-sm rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900 data-[state=active]:shadow-sm py-2">
+          <TabsTrigger value="goals" className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs sm:text-sm h-auto">
             <Target className="h-3.5 w-3.5 shrink-0" />
             <span>Metas</span>
           </TabsTrigger>
-          <TabsTrigger value="expected" className="flex items-center gap-1.5 text-xs sm:text-sm rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900 data-[state=active]:shadow-sm py-2">
+          <TabsTrigger value="expected" className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs sm:text-sm h-auto">
             <Clock className="h-3.5 w-3.5 shrink-0" />
             <span className="hidden sm:inline">A Receber</span>
             <span className="sm:hidden">Rec.</span>
           </TabsTrigger>
-          <TabsTrigger value="fixed" className="flex items-center gap-1.5 text-xs sm:text-sm rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900 data-[state=active]:shadow-sm py-2">
+          <TabsTrigger value="fixed" className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs sm:text-sm h-auto">
             <Receipt className="h-3.5 w-3.5 shrink-0" />
             <span className="hidden sm:inline">Custos Fixos</span>
             <span className="sm:hidden">Fixos</span>
