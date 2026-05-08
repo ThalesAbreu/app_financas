@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
-import { TrendingUp, LayoutDashboard, ArrowLeftRight, LogOut, Menu, X, Sun, Moon } from "lucide-react";
+import { TrendingUp, LayoutDashboard, ArrowLeftRight, LogOut, Menu, X, Sun, Moon, CalendarClock } from "lucide-react";
 import { toast } from "sonner";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/transactions", label: "Transações", icon: ArrowLeftRight },
+  { href: "/planejamento", label: "Planejamento", icon: CalendarClock },
 ];
 
 export function Navbar() {
