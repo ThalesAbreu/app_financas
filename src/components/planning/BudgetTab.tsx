@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { BudgetSettings, Transaction } from "@/lib/types";
-import { Loader2, Settings2, TrendingUp, TrendingDown, Wallet } from "lucide-react";
+import { Loader2, Settings2, TrendingUp, TrendingDown, Wallet, CircleDashed } from "lucide-react";
 
 interface BudgetTabProps {
   transactions: Transaction[];
@@ -16,9 +16,10 @@ interface BudgetTabProps {
   year: number;
 }
 
-const NEEDS_CATEGORIES = ["Alimentação", "Transporte", "Moradia", "Saúde", "Educação", "Outros"];
+const NEEDS_CATEGORIES = ["Alimentação", "Transporte", "Moradia", "Saúde", "Educação"];
 const LEISURE_CATEGORIES = ["Lazer"];
 const INVESTMENT_CATEGORIES = ["Investimentos"];
+const OTHER_CATEGORIES = ["Outros"];
 
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value);
@@ -120,6 +121,7 @@ export function BudgetTab({ transactions, month, year }: BudgetTabProps) {
     needs: transactions.filter(t => t.type === "despesa" && NEEDS_CATEGORIES.includes(t.category)).reduce((s, t) => s + t.amount, 0),
     leisure: transactions.filter(t => t.type === "despesa" && LEISURE_CATEGORIES.includes(t.category)).reduce((s, t) => s + t.amount, 0),
     investment: transactions.filter(t => t.type === "despesa" && INVESTMENT_CATEGORIES.includes(t.category)).reduce((s, t) => s + t.amount, 0),
+    other: transactions.filter(t => t.type === "despesa" && OTHER_CATEGORIES.includes(t.category)).reduce((s, t) => s + t.amount, 0),
   };
 
   const budgetByGroup = settings ? {
@@ -200,7 +202,7 @@ export function BudgetTab({ transactions, month, year }: BudgetTabProps) {
 
       {/* Budget groups */}
       {budgetByGroup && (
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card className="border-0 shadow-sm">
             <CardHeader className="pb-2 flex flex-row items-center justify-between">
               <CardTitle className="text-sm font-medium text-gray-500 dark:text-gray-400">Necessidades</CardTitle>
@@ -240,6 +242,20 @@ export function BudgetTab({ transactions, month, year }: BudgetTabProps) {
               <p className="text-xl font-bold text-gray-900 dark:text-white">{formatCurrency(budgetByGroup.investment)}</p>
               <p className="text-xs text-gray-400 dark:text-gray-500">{settings!.investment_pct}% da renda</p>
               <ProgressBar spent={spentByGroup.investment} limit={budgetByGroup.investment} color="bg-blue-500" />
+            </CardContent>
+          </Card>
+
+          <Card className="border-0 shadow-sm">
+            <CardHeader className="pb-2 flex flex-row items-center justify-between">
+              <CardTitle className="text-sm font-medium text-gray-500 dark:text-gray-400">Outros</CardTitle>
+              <div className="bg-gray-100 dark:bg-gray-800 p-1.5 rounded-lg">
+                <CircleDashed className="h-4 w-4 text-gray-500" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-xl font-bold text-gray-900 dark:text-white">{formatCurrency(spentByGroup.other)}</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500">Gastos não categorizados</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500 mt-3 italic">Sem limite definido</p>
             </CardContent>
           </Card>
         </div>

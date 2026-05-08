@@ -20,7 +20,7 @@ import {
 import { toast } from "sonner";
 import { FixedCost, FixedCostPayment } from "@/lib/types";
 import { ALL_CATEGORIES } from "@/lib/categories";
-import { Plus, Trash2, CheckCircle2, Loader2, Receipt } from "lucide-react";
+import { Plus, Trash2, CheckCircle2, Loader2, Receipt, Pencil } from "lucide-react";
 
 function formatCurrency(v: number) {
   return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(v);
@@ -55,7 +55,11 @@ export function FixedCostsTab() {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
+  const [customCategory, setCustomCategory] = useState("");
   const [dueDay, setDueDay] = useState("");
+
+  const isCustomCategory = category === "_custom";
+  const finalCategory = isCustomCategory ? customCategory.trim() : category;
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -71,12 +75,12 @@ export function FixedCostsTab() {
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
-  function openForm() { setName(""); setAmount(""); setCategory(""); setDueDay(""); setShowForm(true); }
+  function openForm() { setName(""); setAmount(""); setCategory(""); setCustomCategory(""); setDueDay(""); setShowForm(true); }
 
   async function handleCreate() {
     const val = parseFloat(amount.replace(",", "."));
     const day = parseInt(dueDay);
-    if (!name.trim() || isNaN(val) || val <= 0 || !category || isNaN(day) || day < 1 || day > 31) {
+    if (!name.trim() || isNaN(val) || val <= 0 || !finalCategory || isNaN(day) || day < 1 || day > 31) {
       toast.error("Preencha todos os campos corretamente"); return;
     }
     setSaving(true);
@@ -85,7 +89,7 @@ export function FixedCostsTab() {
     if (!user) { setSaving(false); return; }
 
     const { error } = await supabase.from("fixed_costs").insert({
-      user_id: user.id, name: name.trim(), amount: val, category, due_day: day, active: true,
+      user_id: user.id, name: name.trim(), amount: val, category: finalCategory, due_day: day, active: true,
     });
     if (error) toast.error("Erro ao cadastrar custo fixo");
     else { toast.success("Custo fixo cadastrado!"); setShowForm(false); fetchData(); }
@@ -221,14 +225,28 @@ export function FixedCostsTab() {
             </div>
             <div className="space-y-2">
               <Label>Categoria</Label>
-              <Select value={category} onValueChange={(v) => v && setCategory(v)}>
+              <Select value={category} onValueChange={(v) => { if (v) { setCategory(v); if (v !== "_custom") setCustomCategory(""); } }}>
                 <SelectTrigger><SelectValue placeholder="Selecione..." /></SelectTrigger>
                 <SelectContent>
                   {ALL_CATEGORIES.map(cat => (
                     <SelectItem key={cat} value={cat}>{cat}</SelectItem>
                   ))}
+                  <SelectItem value="_custom">
+                    <span className="flex items-center gap-1.5 text-blue-600 dark:text-blue-400">
+                      <Pencil className="h-3.5 w-3.5" />
+                      Personalizada...
+                    </span>
+                  </SelectItem>
                 </SelectContent>
               </Select>
+              {isCustomCategory && (
+                <Input
+                  placeholder="Ex: Pet Shop, Escola, Condomínio..."
+                  value={customCategory}
+                  onChange={(e) => setCustomCategory(e.target.value)}
+                  autoFocus
+                />
+              )}
             </div>
             <div className="flex gap-2">
               <Button variant="outline" onClick={() => setShowForm(false)} className="flex-1">Cancelar</Button>
